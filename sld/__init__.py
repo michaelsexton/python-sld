@@ -596,6 +596,85 @@ class LineSymbolizer(Symbolizer):
         """
         super(LineSymbolizer, self).__init__(parent, 'Line*', descendant)
 
+class Halo(Symbolizer):
+    def __init__(self, parent, descendant=True):
+        super(Halo, self).__init__(parent, 'Halo', descendant)
+        
+        xpath = self._parent.xpath('sld:Halo', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}Halo' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+            
+        setattr(self.__class__, 'Radius', SLDNode.makeproperty('sld', name='Radius',
+                            docstring="The name of the layer."))
+
+class Displacement(SLDNode):
+    def __init__(self, parent, descendant=True):
+        super(Displacement, self).__init__(parent, descendant=descendant)
+        
+        xpath = self._parent.xpath('sld:Displacement', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}Displacement' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+            
+        setattr(self.__class__, 'DisplacementX', SLDNode.makeproperty('sld', name='DisplacementX',
+                            docstring="The name of the layer."))
+        setattr(self.__class__, 'DisplacementY', SLDNode.makeproperty('sld', name='DisplacementY',
+                            docstring="The name of the layer."))
+
+class AnchorPoint(SLDNode):
+    def __init__(self, parent, descendant=True):
+        super(AnchorPoint, self).__init__(parent, descendant=descendant)
+        
+        xpath = self._parent.xpath('sld:AnchorPoint', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}AnchorPoint' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+            
+        setattr(self.__class__, 'AnchorPointX', SLDNode.makeproperty('sld', name='AnchorPointX',
+                        docstring="The name of the layer."))
+        setattr(self.__class__, 'AnchorPointY', SLDNode.makeproperty('sld', name='AnchorPointY',
+                        docstring="The name of the layer."))
+
+class PointPlacement(SLDNode):
+    def __init__(self, parent, descendant=True):
+        super(PointPlacement, self).__init__(parent, descendant=descendant)
+        
+        xpath = self._parent.xpath('sld:PointPlacement', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}PointPlacement' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+
+class PointPlacement(SLDNode):
+    def __init__(self, parent, descendant=True):
+        super(PointPlacement, self).__init__(parent, descendant=descendant)
+        
+        xpath = self._parent.xpath('sld:PointPlacement', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}PointPlacement' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+
+class LabelPlacement(SLDNode):
+    def __init__(self, parent, descendant=True):
+        super(LabelPlacement, self).__init__(parent, descendant=descendant)
+        
+        xpath = self._parent.xpath('sld:LabelPlacement', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}LabelPlacement' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+
 class Label(SLDNode):
     """
     Text label. A Label is a child of a L{TextSymbolizer}
@@ -654,6 +733,8 @@ class TextSymbolizer(Symbolizer):
         super(TextSymbolizer, self).__init__(parent, 'Text*', descendant=descendant)
         setattr(self.__class__, 'Label', SLDNode.makeproperty('sld', cls=Label,
                         docstring="The name of the layer."))
+        setattr(self.__class__, 'LabelPlacement', SLDNode.makeproperty('sld', cls=Label,
+                                        docstring="The name of the layer."))
 
 
 class Mark(Symbolizer):
