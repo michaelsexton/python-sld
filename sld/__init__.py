@@ -596,6 +596,38 @@ class LineSymbolizer(Symbolizer):
         """
         super(LineSymbolizer, self).__init__(parent, 'Line*', descendant)
 
+class Label(SLDNode):
+    """
+    Text label. A Label is a child of a L{TextSymbolizer}
+    element.
+
+    @prop: PropertyName
+
+        The name of the property to use as the label.
+
+        I{Type}: string
+    """
+    def __init__(self, parent, descendant=True):
+        """
+        Create a new Label node, as a child of the specified parent.
+
+        @type  parent: L{TextSymbolizer}
+        @param parent: The parent class object.
+        @type  descendant: boolean
+        @param descendant: A flag indicating if this is a descendant node of the parent.
+        """
+        super(Label, self).__init__(parent, descendant=descendant)
+        
+        xpath = self._parent.xpath('sld:Label', namespaces=SLDNode._nsmap)
+        if len(xpath) < 1:
+            self._node = self._parent.makeelement('{%s}Label' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
+            self._parent.append(self._node)
+        else:
+            self._node = xpath[0]
+        
+        
+        setattr(self.__class__, 'PropertyName', SLDNode.makeproperty('ogc', name='PropertyName',
+                        docstring="The name of the layer."))
 
 class TextSymbolizer(Symbolizer):
     """
@@ -618,7 +650,10 @@ class TextSymbolizer(Symbolizer):
         @type  descendant: boolean
         @param descendant: A flag indicating if this is a descendant node of the parent.
         """
+        
         super(TextSymbolizer, self).__init__(parent, 'Text*', descendant=descendant)
+        setattr(self.__class__, 'Label', SLDNode.makeproperty('sld', cls=Label,
+                        docstring="The name of the layer."))
 
 
 class Mark(Symbolizer):
