@@ -653,17 +653,6 @@ class PointPlacement(SLDNode):
         else:
             self._node = xpath[0]
 
-class PointPlacement(SLDNode):
-    def __init__(self, parent, descendant=True):
-        super(PointPlacement, self).__init__(parent, descendant=descendant)
-        
-        xpath = self._parent.xpath('sld:PointPlacement', namespaces=SLDNode._nsmap)
-        if len(xpath) < 1:
-            self._node = self._parent.makeelement('{%s}PointPlacement' % SLDNode._nsmap['sld'], nsmap=SLDNode._nsmap)
-            self._parent.append(self._node)
-        else:
-            self._node = xpath[0]
-
 class LabelPlacement(SLDNode):
     def __init__(self, parent, descendant=True):
         super(LabelPlacement, self).__init__(parent, descendant=descendant)
