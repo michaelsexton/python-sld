@@ -874,6 +874,7 @@ class PropertyCriterion(SLDNode):
         - PropertyIsGreaterThan
         - PropertyIsGreaterThanOrEqual
         - PropertyIsLike
+        - PropertyIsNull
 
     @prop: PropertyName
 
@@ -1013,6 +1014,16 @@ class Filter(SLDNode):
         elem = self._node.makeelement('{%s}Or' % SLDNode._nsmap['ogc'])
         elem.append(copy.copy(self._node[0]))
         elem.append(copy.copy(other._node[0]))
+
+        f = Filter(self)
+        f._node.append(elem)
+
+        return f
+
+    def __invert__(self):
+
+        elem = self._node.makeelement('{%s}Not' % SLDNode._nsmap['ogc'])
+        elem.append(copy.copy(self._node[0]))
 
         f = Filter(self)
         f._node.append(elem)
